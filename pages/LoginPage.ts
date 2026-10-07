@@ -1,4 +1,4 @@
-import { Page, Locator} from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 import { NavBar } from "../components/NavBar";
 
 export class LoginPage {

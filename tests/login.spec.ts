@@ -1,13 +1,14 @@
 import { test, expect } from '../fixtures/fixtures';
-import { LoginPage } from "../pages/LoginPage"
 import { createUser } from "../helpers/users"
 
-test('Test user login', async ({ page, request }) => {
-    const user = await createUser(request);
-    const loginPage = new LoginPage(page);
+test.describe('login tests', () => {
 
-    await loginPage.goto();
-    await loginPage.login(user.email, user.password);
+    test('Test user login', async ({ loginPage, page, request }) => {
+        const user = await createUser(request);
 
-    await expect(page).toHaveURL('#/search');
+        await loginPage.goto();
+        await loginPage.login(user.email, user.password);
+
+        await expect(page).toHaveURL('#/search');
+    });
 });
