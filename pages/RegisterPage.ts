@@ -24,7 +24,10 @@ export class RegisterPage {
 
 
     async goto() {
+        // The dropdown ignores opening until its options have loaded from this API call.
+        const questionsLoaded = this.page.waitForResponse(/\/api\/SecurityQuestions/);
         await this.page.goto('/#/register');
+        await questionsLoaded;
     }
 
     async selectSecurityOption(question: string) {

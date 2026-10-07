@@ -17,8 +17,13 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+    - name: Start Juice Shop
+      run: docker compose up -d --wait
     - name: Run Playwright tests
       run: npx playwright test
+    - name: Show Juice Shop logs
+      if: failure()
+      run: docker compose logs
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
