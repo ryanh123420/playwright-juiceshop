@@ -7,6 +7,7 @@ export class LoginPage {
     readonly username: Locator;
     readonly password: Locator;
     readonly loginButton: Locator;
+    readonly invalidLogin: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -14,6 +15,7 @@ export class LoginPage {
         this.username = page.getByLabel('Text field for the login email');
         this.password = page.getByLabel('Text field for the login password');
         this.loginButton = page.getByRole('button', { name: 'Login', exact: true});
+        this.invalidLogin = page.getByText('Invalid email or password.');
     }
 
     async goto() {

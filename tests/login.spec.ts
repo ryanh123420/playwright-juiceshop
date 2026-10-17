@@ -11,4 +11,15 @@ test.describe('login tests', () => {
 
         await expect(page).toHaveURL('#/search');
     });
+
+    test('Invalid user login', async({ loginPage, page, request }) => {
+        const username = 'invalid@notarealemail.com'
+        const password = 'notAPassword'
+
+        await loginPage.goto();
+        await loginPage.login(username, password);
+
+        await expect(loginPage.invalidLogin).toBeVisible();
+        await expect(page).toHaveURL('#/login');
+    });
 });
