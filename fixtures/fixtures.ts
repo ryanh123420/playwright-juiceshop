@@ -1,14 +1,16 @@
-import { test as base } from "@playwright/test";
+import { test as base, expect } from "@playwright/test";
 import { LoginPage } from "../pages/LoginPage";
 import { RegisterPage } from "../pages/RegisterPage";
 import { HomePage } from "../pages/HomePage";
 import { BasketPage } from "../pages/BasketPage";
+import { createUser } from "../helpers/users";
 
 type MyFixtures = {
   loginPage: LoginPage;
   registerPage: RegisterPage;
   homePage: HomePage;
   basketPage: BasketPage;
+  user: { email: string, password: string};
 };
 
 export const test = base.extend<MyFixtures>({
@@ -30,6 +32,14 @@ export const test = base.extend<MyFixtures>({
       },
     ]);
     await use(context);
+  },
+
+  user: async ({ request, loginPage, page }, use) => {
+    const user = await createUser(request);
+    await loginPage.goto();
+    await loginPage.login(user.email, user.password);
+    await expect(page).toHaveURL(/#\/search/);
+    await use(user);
   },
 
   loginPage: async ({ page }, use) => {

@@ -12,7 +12,7 @@ test.describe('login tests', () => {
         await expect(page).toHaveURL('#/search');
     });
 
-    test('Invalid user login', async({ loginPage, page, request }) => {
+    test('Invalid user login', async({ loginPage, page }) => {
         const username = 'invalid@notarealemail.com'
         const password = 'notAPassword'
 
