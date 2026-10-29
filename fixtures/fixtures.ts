@@ -4,13 +4,21 @@ import { RegisterPage } from "../pages/RegisterPage";
 import { HomePage } from "../pages/HomePage";
 import { BasketPage } from "../pages/BasketPage";
 import { createUser } from "../helpers/users";
+import { AddressSelectPage } from "../pages/AddressSelectPage";
+import { AddressCreatePage } from "../pages/AddressCreatePage";
+import { type AddressData, createAddress } from "../helpers/addresses";
+import { apiLogin } from "../helpers/auth";
 
 type MyFixtures = {
   loginPage: LoginPage;
   registerPage: RegisterPage;
   homePage: HomePage;
   basketPage: BasketPage;
+  addressSelectPage: AddressSelectPage;
+  addressCreatePage: AddressCreatePage;
   user: { email: string, password: string};
+  token: string;
+  address: AddressData;
 };
 
 export const test = base.extend<MyFixtures>({
@@ -42,6 +50,14 @@ export const test = base.extend<MyFixtures>({
     await use(user);
   },
 
+  token: async ({ request, user }, use) => {
+    await use(await apiLogin(request, user.email, user.password));
+  },
+
+  address: async ({ request, token }, use) => {
+    await use(await createAddress(request, token));
+  },
+
   loginPage: async ({ page }, use) => {
     await use(new LoginPage(page));
   },
@@ -56,6 +72,14 @@ export const test = base.extend<MyFixtures>({
 
   basketPage: async ({ page }, use) => {
     await use(new BasketPage(page));
+  },
+
+  addressSelectPage: async ({ page }, use) => {
+    await use(new AddressSelectPage(page));
+  },
+
+  addressCreatePage: async ({ page }, use) => {
+    await use(new AddressCreatePage(page));
   },
 });
 

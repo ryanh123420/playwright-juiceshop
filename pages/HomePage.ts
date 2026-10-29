@@ -33,14 +33,4 @@ export class HomePage {
     async openProductInfo(name: string) {
         await this.singleProduct(name).click();
     }
-
-    async closeProductInfo() {
-        await this.productInfo.closeButton.click();
-    }
-
-    async searchProduct(name: string) {
-        await this.navBar.openSearchButton.click();
-        await this.navBar.searchField.fill(name);
-        await this.navBar.searchField.press('Enter');
-    }
 }

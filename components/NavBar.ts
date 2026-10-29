@@ -20,4 +20,10 @@ export class NavBar {
         this.basketButton = this.root.getByRole('button', { name: 'Show the shopping cart' });
         this.basketCount = this.basketButton.locator('.fa-layers-counter');
     }
+
+    async searchProduct(name: string) {
+        await this.openSearchButton.click();
+        await this.searchField.fill(name);
+        await this.searchField.press('Enter');
+    }
 }

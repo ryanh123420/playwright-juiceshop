@@ -6,23 +6,23 @@ test.describe('home tests', () => {
         await homePage.goto();
         await expect(homePage.navBar.basketCount).toHaveText('0');
         await expect(homePage.products).not.toHaveCount(0);
-        await homePage.addToBasket("Apple Juice");
+        await homePage.addToBasket("Apple Juice (1000ml)");
         await expect(homePage.navBar.basketCount).toHaveText('1');
     });
 
     test('open product information', async ({ homePage }) => {
         await homePage.goto();    
-        await homePage.openProductInfo("Apple Juice");
+        await homePage.openProductInfo("Apple Juice (1000ml)");
         await expect(homePage.productInfo.root).toBeVisible();
-        await expect(homePage.productInfo.itemName).toContainText("Apple Juice");
+        await expect(homePage.productInfo.itemName).toContainText("Apple Juice (1000ml)");
         await expect(homePage.productInfo.itemPrice).toHaveText("1.99¤");
-        await homePage.closeProductInfo();
+        await homePage.productInfo.close();
         await expect(homePage.productInfo.root).toBeHidden();
     });
 
     test('search for product', async ({ homePage }) => {
         await homePage.goto();
-        await homePage.searchProduct("Apple");
+        await homePage.navBar.searchProduct("Apple");
         await expect(homePage.products.filter({ hasNotText: /apple/i })).toHaveCount(0);
         await expect(homePage.products).toHaveCount(3);
     });

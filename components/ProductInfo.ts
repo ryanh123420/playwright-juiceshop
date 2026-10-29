@@ -14,4 +14,8 @@ export class ProductInfo {
         this.closeButton = this.root.getByRole('button', { name: 'Close Dialog' });
         this.submitButton = this.root.getByRole('button', { name: 'Send the review'});
     }
+
+    async close() {
+        await this.closeButton.click();
+    }
 } 
