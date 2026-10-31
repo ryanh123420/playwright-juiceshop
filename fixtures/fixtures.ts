@@ -7,7 +7,9 @@ import { createUser } from "../helpers/users";
 import { AddressSelectPage } from "../pages/AddressSelectPage";
 import { AddressCreatePage } from "../pages/AddressCreatePage";
 import { DeliveryPage } from "../pages/DeliveryPage";
+import { PaymentPage } from "../pages/PaymentPage";
 import { type AddressData, createAddress } from "../helpers/addresses";
+import { type CreditCardData, createCard } from "../helpers/addCard";
 import { apiLogin } from "../helpers/auth";
 
 type MyFixtures = {
@@ -18,9 +20,11 @@ type MyFixtures = {
   addressSelectPage: AddressSelectPage;
   addressCreatePage: AddressCreatePage;
   deliveryPage: DeliveryPage;
+  paymentPage: PaymentPage;
   user: { email: string, password: string};
   token: string;
   address: AddressData;
+  creditCard: CreditCardData;
 };
 
 export const test = base.extend<MyFixtures>({
@@ -60,6 +64,10 @@ export const test = base.extend<MyFixtures>({
     await use(await createAddress(request, token));
   },
 
+  creditCard: async ({ request, token }, use) => {
+    await use(await createCard(request, token));
+  },
+
   loginPage: async ({ page }, use) => {
     await use(new LoginPage(page));
   },
@@ -86,6 +94,10 @@ export const test = base.extend<MyFixtures>({
 
   deliveryPage: async ({ page }, use) => {
     await use(new  DeliveryPage(page));
+  },
+
+  paymentPage: async ({ page }, use) => {
+    await use(new PaymentPage(page));
   }
 });
 
