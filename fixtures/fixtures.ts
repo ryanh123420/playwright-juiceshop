@@ -6,6 +6,7 @@ import { BasketPage } from "../pages/BasketPage";
 import { createUser } from "../helpers/users";
 import { AddressSelectPage } from "../pages/AddressSelectPage";
 import { AddressCreatePage } from "../pages/AddressCreatePage";
+import { DeliveryPage } from "../pages/DeliveryPage";
 import { type AddressData, createAddress } from "../helpers/addresses";
 import { apiLogin } from "../helpers/auth";
 
@@ -16,6 +17,7 @@ type MyFixtures = {
   basketPage: BasketPage;
   addressSelectPage: AddressSelectPage;
   addressCreatePage: AddressCreatePage;
+  deliveryPage: DeliveryPage;
   user: { email: string, password: string};
   token: string;
   address: AddressData;
@@ -81,6 +83,10 @@ export const test = base.extend<MyFixtures>({
   addressCreatePage: async ({ page }, use) => {
     await use(new AddressCreatePage(page));
   },
+
+  deliveryPage: async ({ page }, use) => {
+    await use(new  DeliveryPage(page));
+  }
 });
 
 export { expect } from "@playwright/test";
