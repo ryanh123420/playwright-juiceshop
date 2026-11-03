@@ -31,6 +31,8 @@ export async function createAddress(
         data: address,
     });
     if (!addressResponse.ok()) throw new Error(`Address creation failed: ${addressResponse.status()}`);
+    const body = await addressResponse.json();
 
-    return address;
+    // Keep the data we sent and add the id the server gave the new address
+    return { ...address, id: body.data.id as number };
 }

@@ -10,7 +10,8 @@ import { DeliveryPage } from "../pages/DeliveryPage";
 import { PaymentPage } from "../pages/PaymentPage";
 import { type AddressData, createAddress } from "../helpers/addresses";
 import { type CreditCardData, createCard } from "../helpers/addCard";
-import { apiLogin } from "../helpers/auth";
+import { type AuthData, apiLogin } from "../helpers/auth";
+import { type BasketItemData, addToBasket } from "../helpers/basket";
 import { OrderSummaryPage } from "../pages/OrderSummaryPage";
 
 type MyFixtures = {
@@ -24,9 +25,11 @@ type MyFixtures = {
   paymentPage: PaymentPage;
   orderSummaryPage: OrderSummaryPage;
   user: { email: string, password: string};
+  auth: AuthData;
   token: string;
-  address: AddressData;
-  creditCard: CreditCardData;
+  basket: BasketItemData;
+  address: AddressData & { id: number };
+  creditCard: CreditCardData & { id: number };
 };
 
 export const test = base.extend<MyFixtures>({
@@ -58,8 +61,17 @@ export const test = base.extend<MyFixtures>({
     await use(user);
   },
 
-  token: async ({ request, user }, use) => {
+  auth: async ({ request, user }, use) => {
     await use(await apiLogin(request, user.email, user.password));
+  },
+
+  token: async ({ auth }, use) => {
+    await use(auth.token);
+  },
+
+  // Adds one Apple Juice to the logged-in user's basket
+  basket: async ({ request, auth }, use) => {
+    await use(await addToBasket(request, auth.token, auth.bid));
   },
 
   address: async ({ request, token }, use) => {

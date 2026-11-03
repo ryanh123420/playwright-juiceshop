@@ -45,8 +45,7 @@ test.describe('address page tests', () => {
     await expect(page).toHaveURL('#/delivery-method');
   });
 
-  test('select an address from multiple choices', async ({ addressSelectPage, user, request }) => {
-    const token = await apiLogin(request, user.email, user.password);
+  test('select an address from multiple choices', async ({ addressSelectPage, token, user, request }) => {
     const firstAddress = await createAddress(request, token, { fullName: 'First Address'});
     const secondAddress = await createAddress(request, token, { fullName: 'Second Address'});
 

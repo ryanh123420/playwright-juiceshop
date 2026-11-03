@@ -25,6 +25,8 @@ export async function createCard(
         data: creditCard,
     });
     if (!creditCardResponse.ok()) throw new Error(`Credit Card creation failed: ${creditCardResponse.status()}`);
+    const body = await creditCardResponse.json();
 
-    return creditCard;
+    // Keep the data we sent and add the id the server gave the new card
+    return { ...creditCard, id: body.data.id as number };
 }

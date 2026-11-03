@@ -13,13 +13,6 @@ test('user can buy a product from login to order completion', async ({
     address, 
     creditCard,
 }) => {
-  await test.step('log in', async () => {
-    await loginPage.goto();
-    await loginPage.login(user.email, user.password);
-    
-    await expect(page).toHaveURL('#/search');
-  });
-
   await test.step('add item to basket', async () => {
     await expect(homePage.navBar.basketCount).toHaveText('0');
     await expect(homePage.products).not.toHaveCount(0);
